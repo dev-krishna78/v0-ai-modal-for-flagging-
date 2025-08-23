@@ -87,16 +87,18 @@ const chartConfig = {
 
 export function AnalyticsDashboard() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6 w-full max-w-full overflow-x-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight">Analytics & Reports</h2>
-          <p className="text-muted-foreground">Comprehensive fraud detection analytics and insights</p>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="w-full sm:w-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Analytics & Reports</h2>
+          <p className="text-muted-foreground text-sm sm:text-base">
+            Comprehensive fraud detection analytics and insights
+          </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 w-full sm:w-auto">
           <Select defaultValue="7d">
-            <SelectTrigger className="w-32 bg-muted/50 border-border/50">
+            <SelectTrigger className="w-full sm:w-32 bg-muted/50 border-border/50">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -106,30 +108,33 @@ export function AnalyticsDashboard() {
               <SelectItem value="90d">Last 90 days</SelectItem>
             </SelectContent>
           </Select>
-          <Button className="glow-blue">
+          <Button className="glow-blue flex-1 sm:flex-none">
             <Download className="h-4 w-4 mr-2" />
-            Export Report
+            <span className="hidden sm:inline">Export Report</span>
+            <span className="sm:hidden">Export</span>
           </Button>
         </div>
       </div>
 
       {/* AI Performance Metrics */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4 w-full">
         {aiPerformanceData.map((metric) => {
           const TrendIcon = metric.trend === "up" ? TrendingUp : TrendingDown
           return (
-            <Card key={metric.metric} className="bg-card/50 border-border/50">
+            <Card key={metric.metric} className="bg-card/50 border-border/50 w-full">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">AI {metric.metric}</CardTitle>
-                <Shield className="h-4 w-4 text-primary" />
+                <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
+                  AI {metric.metric}
+                </CardTitle>
+                <Shield className="h-4 w-4 text-primary flex-shrink-0" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{metric.value}%</div>
+                <div className="text-lg sm:text-2xl font-bold">{metric.value}%</div>
                 <div className="flex items-center text-xs text-muted-foreground">
                   <TrendIcon
-                    className={`h-3 w-3 mr-1 ${metric.trend === "up" ? "text-secondary" : "text-destructive"}`}
+                    className={`h-3 w-3 mr-1 flex-shrink-0 ${metric.trend === "up" ? "text-secondary" : "text-destructive"}`}
                   />
-                  {metric.change} from last period
+                  <span className="truncate">{metric.change} from last period</span>
                 </div>
               </CardContent>
             </Card>
@@ -138,16 +143,16 @@ export function AnalyticsDashboard() {
       </div>
 
       {/* Risk Trends Chart */}
-      <Card className="bg-card/50 border-border/50">
+      <Card className="bg-card/50 border-border/50 w-full">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <BarChart3 className="h-5 w-5" />
+          <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+            <BarChart3 className="h-5 w-5 flex-shrink-0" />
             Risk Trends Over Time
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <ChartContainer config={chartConfig} className="h-80">
-            <AreaChart data={riskTrendData}>
+          <ChartContainer config={chartConfig} className="h-64 sm:h-80 w-full">
+            <AreaChart data={riskTrendData} width="100%" height="100%">
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis dataKey="date" stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
@@ -181,18 +186,18 @@ export function AnalyticsDashboard() {
         </CardContent>
       </Card>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 xl:grid-cols-2 w-full">
         {/* Transaction Volume by Hour */}
-        <Card className="bg-card/50 border-border/50">
+        <Card className="bg-card/50 border-border/50 w-full">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Activity className="h-5 w-5" />
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <Activity className="h-5 w-5 flex-shrink-0" />
               Transaction Volume by Hour
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ChartContainer config={chartConfig} className="h-64">
-              <BarChart data={transactionVolumeData}>
+            <ChartContainer config={chartConfig} className="h-48 sm:h-64 w-full">
+              <BarChart data={transactionVolumeData} width="100%" height="100%">
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                 <XAxis dataKey="hour" stroke="hsl(var(--muted-foreground))" fontSize={12} />
                 <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
@@ -205,25 +210,25 @@ export function AnalyticsDashboard() {
         </Card>
 
         {/* Alert Types Distribution */}
-        <Card className="bg-card/50 border-border/50">
+        <Card className="bg-card/50 border-border/50 w-full">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <PieChartIcon className="h-5 w-5" />
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <PieChartIcon className="h-5 w-5 flex-shrink-0" />
               Alert Types Distribution
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {alertTypeData.map((item, index) => (
-                <div key={item.type} className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+                <div key={item.type} className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 min-w-0 flex-1">
                     <div
-                      className="w-3 h-3 rounded-full"
+                      className="w-3 h-3 rounded-full flex-shrink-0"
                       style={{ backgroundColor: `hsl(var(--chart-${index + 1}))` }}
                     />
-                    <span className="text-sm">{item.type}</span>
+                    <span className="text-sm truncate">{item.type}</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-shrink-0">
                     <span className="text-sm font-mono">{item.count}</span>
                     <Badge variant="outline" className="text-xs">
                       {item.percentage}%
@@ -237,18 +242,18 @@ export function AnalyticsDashboard() {
       </div>
 
       {/* Geographic Risk Distribution */}
-      <Card className="bg-card/50 border-border/50">
+      <Card className="bg-card/50 border-border/50 w-full">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Globe className="h-5 w-5" />
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Globe className="h-5 w-5 flex-shrink-0" />
             Geographic Risk Distribution
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {geographicRiskData.map((region) => (
               <div key={region.region} className="space-y-2">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <span className="font-medium">{region.region}</span>
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-mono">{region.transactions.toLocaleString()} txns</span>
@@ -278,35 +283,35 @@ export function AnalyticsDashboard() {
       </Card>
 
       {/* Real-time Monitoring */}
-      <Card className="bg-card/50 border-border/50">
+      <Card className="bg-card/50 border-border/50 w-full">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Activity className="h-5 w-5" />
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Activity className="h-5 w-5 flex-shrink-0" />
             Real-time Risk Monitoring
             <Badge className="ml-2 glow-green">Live</Badge>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4 md:grid-cols-3">
-            <div className="text-center p-4 rounded-lg bg-muted/30 border border-border/30">
-              <div className="text-2xl font-bold text-primary">1,247</div>
-              <div className="text-sm text-muted-foreground">Transactions/Hour</div>
+          <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-3 w-full">
+            <div className="text-center p-3 sm:p-4 rounded-lg bg-muted/30 border border-border/30">
+              <div className="text-xl sm:text-2xl font-bold text-primary">1,247</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Transactions/Hour</div>
               <div className="flex items-center justify-center gap-1 text-xs text-secondary mt-1">
                 <TrendingUp className="h-3 w-3" />
                 +12.5%
               </div>
             </div>
-            <div className="text-center p-4 rounded-lg bg-muted/30 border border-border/30">
-              <div className="text-2xl font-bold text-destructive">23</div>
-              <div className="text-sm text-muted-foreground">Active Alerts</div>
+            <div className="text-center p-3 sm:p-4 rounded-lg bg-muted/30 border border-border/30">
+              <div className="text-xl sm:text-2xl font-bold text-destructive">23</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Active Alerts</div>
               <div className="flex items-center justify-center gap-1 text-xs text-destructive mt-1">
                 <AlertTriangle className="h-3 w-3" />
                 Critical
               </div>
             </div>
-            <div className="text-center p-4 rounded-lg bg-muted/30 border border-border/30">
-              <div className="text-2xl font-bold text-accent">94.2%</div>
-              <div className="text-sm text-muted-foreground">AI Accuracy</div>
+            <div className="text-center p-3 sm:p-4 rounded-lg bg-muted/30 border border-border/30">
+              <div className="text-xl sm:text-2xl font-bold text-accent">94.2%</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">AI Accuracy</div>
               <div className="flex items-center justify-center gap-1 text-xs text-secondary mt-1">
                 <TrendingUp className="h-3 w-3" />
                 +2.1%

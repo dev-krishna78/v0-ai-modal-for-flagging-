@@ -225,87 +225,89 @@ export function AlertsPanel() {
   const highRiskAlerts = mockAlerts.filter((alert) => alert.severity === "high").length
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6 w-full max-w-full overflow-x-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight">Security Alerts</h2>
-          <p className="text-muted-foreground">Monitor and manage fraud detection alerts</p>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="w-full sm:w-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Security Alerts</h2>
+          <p className="text-muted-foreground text-sm sm:text-base">Monitor and manage fraud detection alerts</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline">
+        <div className="flex gap-2 w-full sm:w-auto">
+          <Button variant="outline" className="flex-1 sm:flex-none bg-transparent">
             <CheckCircle className="h-4 w-4 mr-2" />
-            Mark All Read
+            <span className="hidden sm:inline">Mark All Read</span>
+            <span className="sm:hidden">Mark Read</span>
           </Button>
-          <Button className="glow-blue">
+          <Button className="glow-blue flex-1 sm:flex-none">
             <Shield className="h-4 w-4 mr-2" />
-            Security Center
+            <span className="hidden sm:inline">Security Center</span>
+            <span className="sm:hidden">Security</span>
           </Button>
         </div>
       </div>
 
       {/* Alert Summary Cards */}
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card className="bg-card/50 border-border/50">
+      <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-3 w-full">
+        <Card className="bg-card/50 border-border/50 w-full">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Active Alerts</CardTitle>
-            <AlertTriangle className="h-4 w-4 text-destructive" />
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">Active Alerts</CardTitle>
+            <AlertTriangle className="h-4 w-4 text-destructive flex-shrink-0" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-destructive">{activeAlerts}</div>
+            <div className="text-xl sm:text-2xl font-bold text-destructive">{activeAlerts}</div>
             <p className="text-xs text-muted-foreground">Require immediate attention</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-card/50 border-border/50">
+        <Card className="bg-card/50 border-border/50 w-full">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Critical Alerts</CardTitle>
-            <Shield className="h-4 w-4 text-destructive" />
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">Critical Alerts</CardTitle>
+            <Shield className="h-4 w-4 text-destructive flex-shrink-0" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-destructive">{criticalAlerts}</div>
+            <div className="text-xl sm:text-2xl font-bold text-destructive">{criticalAlerts}</div>
             <p className="text-xs text-muted-foreground">Highest priority incidents</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-card/50 border-border/50">
+        <Card className="bg-card/50 border-border/50 w-full">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">High Risk</CardTitle>
-            <TrendingUp className="h-4 w-4 text-accent" />
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">High Risk</CardTitle>
+            <TrendingUp className="h-4 w-4 text-accent flex-shrink-0" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-accent">{highRiskAlerts}</div>
+            <div className="text-xl sm:text-2xl font-bold text-accent">{highRiskAlerts}</div>
             <p className="text-xs text-muted-foreground">Elevated risk transactions</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Filters */}
-      <Card className="bg-card/50 border-border/50">
+      <Card className="bg-card/50 border-border/50 w-full">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Filter className="h-5 w-5" />
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Filter className="h-5 w-5 flex-shrink-0" />
             Alert Filters
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+          <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
             {/* Search */}
-            <div className="lg:col-span-2">
+            <div className="sm:col-span-2 lg:col-span-2">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder="Search alerts..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-muted/50 border-border/50 focus:border-primary focus:glow-blue transition-all"
+                  className="pl-10 bg-muted/50 border-border/50 focus:border-primary focus:glow-blue transition-all w-full"
                 />
               </div>
             </div>
 
             {/* Severity Filter */}
             <Select value={severityFilter} onValueChange={setSeverityFilter}>
-              <SelectTrigger className="bg-muted/50 border-border/50">
+              <SelectTrigger className="bg-muted/50 border-border/50 w-full">
                 <SelectValue placeholder="Severity" />
               </SelectTrigger>
               <SelectContent>
@@ -319,7 +321,7 @@ export function AlertsPanel() {
 
             {/* Status Filter */}
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="bg-muted/50 border-border/50">
+              <SelectTrigger className="bg-muted/50 border-border/50 w-full">
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
@@ -333,7 +335,7 @@ export function AlertsPanel() {
 
             {/* Type Filter */}
             <Select value={typeFilter} onValueChange={setTypeFilter}>
-              <SelectTrigger className="bg-muted/50 border-border/50">
+              <SelectTrigger className="bg-muted/50 border-border/50 w-full">
                 <SelectValue placeholder="Type" />
               </SelectTrigger>
               <SelectContent>
@@ -350,16 +352,16 @@ export function AlertsPanel() {
       </Card>
 
       {/* Alerts List */}
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4 w-full">
         {filteredAlerts.map((alert) => (
-          <Card key={alert.id} className="bg-card/50 border-border/50 hover:bg-card/80 transition-all">
-            <CardContent className="p-6">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex items-start gap-4 flex-1">
+          <Card key={alert.id} className="bg-card/50 border-border/50 hover:bg-card/80 transition-all w-full">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex flex-col lg:flex-row items-start justify-between gap-4">
+                <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 flex-1 w-full min-w-0">
                   {/* Alert Icon */}
                   <div
                     className={`
-                    flex items-center justify-center w-12 h-12 rounded-lg
+                    flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex-shrink-0
                     ${
                       alert.severity === "critical" || alert.severity === "high"
                         ? "bg-destructive/20 text-destructive"
@@ -371,35 +373,37 @@ export function AlertsPanel() {
                   </div>
 
                   {/* Alert Details */}
-                  <div className="flex-1 space-y-2">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="font-semibold text-lg">{getTypeLabel(alert.type)}</h3>
-                      {getSeverityBadge(alert.severity)}
-                      {getStatusBadge(alert.status)}
+                  <div className="flex-1 space-y-2 w-full min-w-0">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                      <h3 className="font-semibold text-base sm:text-lg">{getTypeLabel(alert.type)}</h3>
+                      <div className="flex gap-2">
+                        {getSeverityBadge(alert.severity)}
+                        {getStatusBadge(alert.status)}
+                      </div>
                     </div>
 
-                    <p className="text-muted-foreground">{alert.description}</p>
+                    <p className="text-muted-foreground text-sm sm:text-base">{alert.description}</p>
 
-                    <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-4 text-sm">
-                      <div>
+                    <div className="grid gap-2 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 text-xs sm:text-sm">
+                      <div className="min-w-0">
                         <span className="text-muted-foreground">Transaction:</span>
-                        <span className="ml-1 font-mono">{alert.transactionId}</span>
+                        <span className="ml-1 font-mono truncate block sm:inline">{alert.transactionId}</span>
                       </div>
-                      <div>
+                      <div className="min-w-0">
                         <span className="text-muted-foreground">Amount:</span>
                         <span className="ml-1 font-mono font-semibold">${alert.amount.toLocaleString()}</span>
                       </div>
-                      <div>
+                      <div className="min-w-0">
                         <span className="text-muted-foreground">User:</span>
-                        <span className="ml-1">{alert.user}</span>
+                        <span className="ml-1 truncate block sm:inline">{alert.user}</span>
                       </div>
-                      <div>
+                      <div className="min-w-0">
                         <span className="text-muted-foreground">Location:</span>
-                        <span className="ml-1">{alert.location}</span>
+                        <span className="ml-1 truncate block sm:inline">{alert.location}</span>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-4 text-sm">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm">
                       <div>
                         <span className="text-muted-foreground">Risk Score:</span>
                         <span className="ml-1 font-mono font-semibold text-destructive">{alert.riskScore}</span>
@@ -417,18 +421,34 @@ export function AlertsPanel() {
                 </div>
 
                 {/* Actions */}
-                <div className="flex flex-col gap-2">
-                  <Button size="sm" variant="outline" onClick={() => handleAlertAction(alert.id, "view")}>
+                <div className="flex flex-row lg:flex-col gap-2 w-full lg:w-auto">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => handleAlertAction(alert.id, "view")}
+                    className="flex-1 lg:flex-none"
+                  >
                     <Eye className="h-3 w-3 mr-1" />
                     View
                   </Button>
                   {alert.status === "active" && (
                     <>
-                      <Button size="sm" variant="outline" onClick={() => handleAlertAction(alert.id, "acknowledge")}>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleAlertAction(alert.id, "acknowledge")}
+                        className="flex-1 lg:flex-none"
+                      >
                         <CheckCircle className="h-3 w-3 mr-1" />
-                        Acknowledge
+                        <span className="hidden sm:inline">Acknowledge</span>
+                        <span className="sm:hidden">Ack</span>
                       </Button>
-                      <Button size="sm" variant="outline" onClick={() => handleAlertAction(alert.id, "dismiss")}>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleAlertAction(alert.id, "dismiss")}
+                        className="flex-1 lg:flex-none"
+                      >
                         <X className="h-3 w-3 mr-1" />
                         Dismiss
                       </Button>
@@ -442,11 +462,11 @@ export function AlertsPanel() {
       </div>
 
       {filteredAlerts.length === 0 && (
-        <Card className="bg-card/50 border-border/50">
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <Shield className="h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No alerts found</h3>
-            <p className="text-muted-foreground text-center">
+        <Card className="bg-card/50 border-border/50 w-full">
+          <CardContent className="flex flex-col items-center justify-center py-8 sm:py-12">
+            <Shield className="h-8 w-8 sm:h-12 sm:w-12 text-muted-foreground mb-4" />
+            <h3 className="text-base sm:text-lg font-semibold mb-2">No alerts found</h3>
+            <p className="text-muted-foreground text-center text-sm sm:text-base">
               No alerts match your current filters. Try adjusting your search criteria.
             </p>
           </CardContent>

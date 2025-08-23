@@ -38,41 +38,48 @@ export function DashboardLayout({ children, activeTab = "dashboard", onTabChange
   ]
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden max-w-screen">
       {/* Top Navbar */}
       <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
-        <div className="flex h-16 items-center px-4 gap-4">
+        <div className="flex h-16 items-center px-2 sm:px-4 gap-2 sm:gap-4 w-full max-w-full">
           {/* Mobile menu button */}
-          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setSidebarOpen(!sidebarOpen)}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden flex-shrink-0"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+          >
             {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
 
           {/* Logo */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-shrink-0">
             <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary glow-blue">
               <Shield className="h-5 w-5 text-primary-foreground" />
             </div>
-            <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent hidden xs:block">
               AI FraudShield
             </h1>
           </div>
 
           {/* Search */}
-          <div className="flex-1 max-w-md ml-auto mr-4">
+          <div className="flex-1 max-w-xs sm:max-w-md ml-auto mr-2 sm:mr-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search transactions, users, alerts..."
-                className="pl-10 bg-muted/50 border-border/50 focus:border-primary focus:glow-blue transition-all"
+                className="pl-10 bg-muted/50 border-border/50 focus:border-primary focus:glow-blue transition-all text-sm w-full"
               />
             </div>
           </div>
 
           {/* Theme Toggle */}
-          <ThemeToggle />
+          <div className="flex-shrink-0">
+            <ThemeToggle />
+          </div>
 
           {/* Notifications */}
-          <Button variant="ghost" size="icon" className="relative">
+          <Button variant="ghost" size="icon" className="relative flex-shrink-0">
             <Bell className="h-5 w-5" />
             <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs bg-destructive glow-red">
               3
@@ -81,13 +88,13 @@ export function DashboardLayout({ children, activeTab = "dashboard", onTabChange
         </div>
       </header>
 
-      <div className="flex">
+      <div className="flex w-full max-w-full overflow-x-hidden">
         {/* Sidebar */}
         <aside
           className={`
           fixed inset-y-0 left-0 z-40 w-64 bg-sidebar border-r border-sidebar-border transform transition-transform duration-200 ease-in-out
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-          md:relative md:translate-x-0 md:block
+          md:relative md:translate-x-0 md:block md:flex-shrink-0
           top-16
         `}
         >
@@ -127,7 +134,7 @@ export function DashboardLayout({ children, activeTab = "dashboard", onTabChange
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">{children}</main>
+        <main className="flex-1 p-3 sm:p-4 lg:p-6 w-full min-w-0 overflow-x-hidden">{children}</main>
       </div>
 
       {/* Mobile overlay */}
