@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Search, Filter, Download, Eye, AlertTriangle, CheckCircle, Clock } from "lucide-react"
+import { FileUploadModal } from "./file-upload-modal"
 
 interface Transaction {
   id: string
@@ -165,10 +166,13 @@ export function TransactionTable() {
           <h2 className="text-3xl font-bold tracking-tight">Transactions</h2>
           <p className="text-muted-foreground">Monitor and analyze all transaction activity</p>
         </div>
-        <Button className="glow-blue">
-          <Download className="h-4 w-4 mr-2" />
-          Export Data
-        </Button>
+        <div className="flex gap-3">
+          <FileUploadModal />
+          <Button className="glow-blue">
+            <Download className="h-4 w-4 mr-2" />
+            Export Data
+          </Button>
+        </div>
       </div>
 
       {/* Filters */}
