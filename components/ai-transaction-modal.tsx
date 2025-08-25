@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Textarea } from "@/components/ui/textarea"
+import { Textarea } from "./ui/textarea"
 import { Label } from "@/components/ui/label"
 import { AlertTriangle, Shield, CheckCircle, Brain } from "lucide-react"
 
@@ -38,9 +38,26 @@ export function AITransactionModal({ isOpen, onClose, transaction, suspiciousRea
 
   const handleFlag = async () => {
     setIsSubmitting(true)
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setIsSubmitted(true)
+    try {
+      // Real API call
+      const response = await fetch("https://v0-ai-modal-backend.onrender.com/flag-transaction", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          transaction,
+          reason
+        })
+      })
+      if (!response.ok) {
+        throw new Error("API request failed")
+      }
+      setIsSubmitted(true)
+    } catch (error) {
+      // Optionally handle error (show message, etc.)
+      setIsSubmitted(false)
+    }
     setIsSubmitting(false)
 
     // Auto close after success
@@ -133,7 +150,7 @@ export function AITransactionModal({ isOpen, onClose, transaction, suspiciousRea
                   id="reason"
                   placeholder="Add any additional context or concerns..."
                   value={reason}
-                  onChange={(e) => setReason(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setReason(e.target.value)}
                   className="min-h-[80px] resize-none"
                 />
               </div>
